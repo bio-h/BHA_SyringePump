@@ -16,6 +16,8 @@
 #define ROTARY_ENCODER_PINA 2
 #define ROTARY_ENCODER_PINB 3
 
+#define BUTTON_PIN 7
+
 #define MICROSTEPS 32
 
 // Set the LCD address to 0x27 for a 16 chars and 2 line display
@@ -100,11 +102,11 @@ void setupLCD() {
 
 void updateLCD()
 {
-  lcd.clear();  
+//  lcd.clear();  
   lcd.setCursor(0,0);
   lcd.print(F("Speed: "));
   lcd.print( (int)(motorSpeed*60.0f) );
-  lcd.print(F(" rpm"));
+  lcd.print(F(" rpm   "));
 
 /*  lcd.setCursor(0,1);
   lcd.print(F("Volume: "));//clear row
@@ -117,8 +119,11 @@ void updateLCD()
   lcd.print( " cm3/s");*/
   
   lcd.setCursor(0,1);
-  lcd.print("Control: ");
+  lcd.print("rot: ");
   lcd.print(encoderValue);
+  lcd.print(" btn: ");
+  lcd.print(digitalRead(BUTTON_PIN));
+  lcd.print("   ");
 }
 
 
@@ -175,6 +180,9 @@ void setup() {
   
   setupRotaryEncoder();
   
+  pinMode(BUTTON_PIN,INPUT);
+  digitalWrite(BUTTON_PIN,HIGH); // set internal pull-up. When the button shorts, we see a 0. Otherwise, the internal pull-up resistor will pull the pin high.
+  
   delay(600);
   Timer1.initialize(15000);
   Timer1.attachInterrupt(motorMove); // blinkLED to run every 0.15 seconds
@@ -200,7 +208,7 @@ void loop() {
 //  motorMove();
 //  delay(100);
 
-  if (time > lastUpdate + 500) {
+  if (time > lastUpdate + 100) {
   //  Serial.println("...");
     lastUpdate=time;
     updateLCD();
