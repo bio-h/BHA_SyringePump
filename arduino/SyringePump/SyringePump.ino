@@ -1,3 +1,11 @@
+/*
+
+Device chaining:
+Devices can be chained by connecting another device to software serial pins (rx=8 and tx=9)
+Connect the RX pin (8) to the TX pin of the next device, and the TX pin (9) to the RX of the next device.
+Commands to the next device can be send by prefixing a line with a $ character. Information from the 
+*/
+
 
 /* *******************************************************
 /  Libraries
@@ -30,6 +38,12 @@ uint32_t lastUpdate=0;
 
 
 
+#define CHAIN_SERIAL_RX_PIN 8
+#define CHAIN_SERIAL_TX_PIN 9
+SoftwareSerial chainedDeviceSerial(CHAIN_SERIAL_RX_PIN, CHAIN_SERIAL_TX_PIN);
+String chainedDeviceBuffer;
+
+
 /* *******************************************************
 /  Variables needed for keeping track of time
 */
@@ -47,7 +61,6 @@ uint32_t lastTick = 0; // Global Clock
 #define elapsedDays(_time_) ( _time_ / SECS_PER_DAY)  
 
 float motorSpeed = 0.0f;
-
 
 //Based on bildr article: http://bildr.org/2012/08/rotary-encoder-arduino/
 volatile int lastEncoded = 0;
@@ -166,7 +179,7 @@ void setup() {
 
   // Open serial connection and print a message
   Serial.begin(9600);
-  Serial.println(F("BioHack Academy SyringePump"));
+  Serial.println(F("syringe-pump"));
 
   // initialize the LED pin as an output:
   pinMode(LED_PIN, OUTPUT);
@@ -189,6 +202,9 @@ void setup() {
 //  lcd.backlight();
   
   updateLCD();
+  
+  chainedDeviceSerial.begin(9600);
+  
 }
 
 
@@ -214,10 +230,25 @@ void loop() {
     updateLCD();
   }
     
+  while (chainedDeviceSerial.available()>0) {
+    char c = (char)chainedDeviceSerial.read();
+    if (c == '\n') {
+      Serial.print("$"); Serial.println(chainedDeviceBuffer);
+      chainedDeviceBuffer = "";
+    } else {
+      if (chainedDeviceBuffer.length()<100)
+        chainedDeviceBuffer += c;
+    }
+  }
+    
   while (Serial.available()>0) {
     char c = (char)Serial.read();
     if (c == '\n') {
-      if (buffer.startsWith("sp")) {
+      if (buffer.startsWith("$")) {
+        chainedDeviceSerial.println(buffer.substring(1));
+      } else if(buffer.startsWith("id")) {
+        Serial.println("syringe-pump");      
+      } else if (buffer.startsWith("sp")) {
         float sp = buffer.substring(2).toInt()/60.0f;
         Serial.print(F("Setting motor speed to "));
         Serial.print(sp, 2);
