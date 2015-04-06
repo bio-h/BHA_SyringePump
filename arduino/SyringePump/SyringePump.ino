@@ -247,7 +247,7 @@ void loop() {
       if (buffer.startsWith("$")) {
         chainedDeviceSerial.println(buffer.substring(1));
       } else if(buffer.startsWith("id")) {
-        Serial.println("syringe-pump");      
+        Serial.println("id:syringe-pump");      
       } else if (buffer.startsWith("sp")) {
         float sp = buffer.substring(2).toInt()/60.0f;
         Serial.print(F("Setting motor speed to "));
