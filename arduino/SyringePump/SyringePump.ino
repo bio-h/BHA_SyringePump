@@ -1,11 +1,3 @@
-/*
-
-Device chaining:
-Devices can be chained by connecting another device to software serial pins (rx=8 and tx=9)
-Connect the RX pin (8) to the TX pin of the next device, and the TX pin (9) to the RX of the next device.
-Commands to the next device can be send by prefixing a line with a $ character. Information from the 
-*/
-
 
 /* *******************************************************
 /  Libraries
@@ -37,11 +29,6 @@ String buffer;
 uint32_t lastUpdate=0;
 
 
-
-#define CHAIN_SERIAL_RX_PIN 8
-#define CHAIN_SERIAL_TX_PIN 9
-SoftwareSerial chainedDeviceSerial(CHAIN_SERIAL_RX_PIN, CHAIN_SERIAL_TX_PIN);
-String chainedDeviceBuffer;
 
 
 /* *******************************************************
@@ -203,7 +190,6 @@ void setup() {
   
   updateLCD();
   
-  chainedDeviceSerial.begin(9600);
   
 }
 
@@ -229,26 +215,14 @@ void loop() {
     lastUpdate=time;
     updateLCD();
   }
-    
-  while (chainedDeviceSerial.available()>0) {
-    char c = (char)chainedDeviceSerial.read();
-    if (c == '\n') {
-      Serial.print("$"); Serial.println(chainedDeviceBuffer);
-      chainedDeviceBuffer = "";
-    } else {
-      if (chainedDeviceBuffer.length()<100)
-        chainedDeviceBuffer += c;
-    }
-  }
+  
     
   while (Serial.available()>0) {
     char c = (char)Serial.read();
     if (c == '\n') {
-      if (buffer.startsWith("$")) {
-        chainedDeviceSerial.println(buffer.substring(1));
-      } else if(buffer.startsWith("id")) {
+      if(buffer.startsWith("id")) {
         Serial.println("id:syringe-pump");      
-      } else if (buffer.startsWith("sp")) {
+      } else if (buffer.startsWith("move")) {
         float sp = buffer.substring(2).toInt()/60.0f;
         Serial.print(F("Setting motor speed to "));
         Serial.print(sp, 2);
