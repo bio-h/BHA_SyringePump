@@ -30,6 +30,7 @@ uint32_t lastUpdate=0;
 
 
 
+
 /* *******************************************************
 /  Variables needed for keeping track of time
 */
@@ -47,7 +48,6 @@ uint32_t lastTick = 0; // Global Clock
 #define elapsedDays(_time_) ( _time_ / SECS_PER_DAY)  
 
 float motorSpeed = 0.0f;
-
 
 //Based on bildr article: http://bildr.org/2012/08/rotary-encoder-arduino/
 volatile int lastEncoded = 0;
@@ -166,7 +166,7 @@ void setup() {
 
   // Open serial connection and print a message
   Serial.begin(9600);
-  Serial.println(F("BioHack Academy SyringePump"));
+  Serial.println(F("syringe-pump"));
 
   // initialize the LED pin as an output:
   pinMode(LED_PIN, OUTPUT);
@@ -189,6 +189,8 @@ void setup() {
 //  lcd.backlight();
   
   updateLCD();
+  
+  
 }
 
 
@@ -213,11 +215,14 @@ void loop() {
     lastUpdate=time;
     updateLCD();
   }
+  
     
   while (Serial.available()>0) {
     char c = (char)Serial.read();
     if (c == '\n') {
-      if (buffer.startsWith("sp")) {
+      if(buffer.startsWith("id")) {
+        Serial.println("id:syringe-pump");      
+      } else if (buffer.startsWith("move")) {
         float sp = buffer.substring(2).toInt()/60.0f;
         Serial.print(F("Setting motor speed to "));
         Serial.print(sp, 2);
