@@ -223,7 +223,7 @@ void loop() {
       if(buffer.startsWith("id")) {
         Serial.println("id:syringe-pump");      
       } else if (buffer.startsWith("move")) {
-        float sp = buffer.substring(2).toInt()/60.0f;
+        float sp = buffer.substring(4).toInt()/60.0f;
         Serial.print(F("Setting motor speed to "));
         Serial.print(sp, 2);
         Serial.println(F(" rpm"));
