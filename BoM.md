@@ -4,8 +4,8 @@ You will need an Arduino UNO or similar microprocessor.
 
 ### Must have 
 
-|#|Amount|Description|Supplier NL|Cost|
-|-:|----:|:---------|:-------|---:|
+|No|Amount|Description|Supplier NL|Cost|
+| ------------: | ------------: | :------------ | :------------ | ------------: |
 |1|1|NEMA17 Stepper motor|[RepRapWorld](http://reprapworld.com/?products_details&products_id=94&cPath=1614)|12.50|
 |2|1|Pololu Stepper Driver|[RepRapWorld](http://reprapworld.com/?products_details&products_id=356)|11.99
 |3|1|8mm smooth rod|[RepRapWorld](http://reprapworld.com/?products_details&products_id=342&cPath=1655)|2.99|
@@ -22,8 +22,6 @@ You will need an Arduino UNO or similar microprocessor.
 |14|1|12V 5A Power supply|[Farnell](http://nl.farnell.com/ideal-power/66ms-00120500-s01-v/psu-12v-5a-earthed-output/dp/2112013), [EOO](http://www.eoo-bv.nl/index.php?_a=viewProd&productId=13247)|20.00|
 |15|2|10K resistor|[Farnell](http://nl.farnell.com/te-connectivity/cfr16j10k/resistor-carbon-10k-0-25w-5/dp/2329474), [EOO](http://www.eoo-bv.nl/index.php?_a=viewProd&productId=7016)|0.12|
 |16|2|10nF capacitor|[EOO](http://www.eoo-bv.nl/index.php?_a=viewProd&productId=5695)|0.2|
-|--|--|---|---|---|
-|||*Total costs*|||
 
 You will also need: 
 * 60 mL syringe, make sure you adjust the mount according to the dimensions of your syringe!!
@@ -31,11 +29,9 @@ You will also need:
 
 ### Nice to have
 
-|#|Amount|Description|Supplier NL|Cost|
-|-:|----:|:---------|:-------|---:|
+|No|Amount|Description|Supplier NL|Cost|
+| ------------: | ------------: | :------------ | :------------ | ------------: |
 |1|1|I2C LCD 16x2 Display|[iPrototype](https://iprototype.nl/products/components/led-lcd/lcd16x2-I2C-BL), ([HobbyElectronica](http://www.hobbyelectronica.nl/product/hd44780-16x2-karakters-lcd-display-module-blauw-backlight/) + [HobbyElectronica](http://www.hobbyelectronica.nl/product/i2c-lcd-interface-voor-16x2-en-20x4-displays/))|16.95|
-|--|--|---|---|---|
-|||*Total costs*|||
 
 **Alternatives**
 
