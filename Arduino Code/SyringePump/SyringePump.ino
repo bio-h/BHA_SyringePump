@@ -212,6 +212,10 @@ void loop() {
 
   if (time > lastUpdate + 100) {
   //  Serial.println("...");
+    if (encoderValue != 0) {
+      setMotorSpeed(motorSpeed + encoderValue); 
+      encoderValue=0;  
+    }
     lastUpdate=time;
     updateLCD();
   }
