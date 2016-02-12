@@ -4,7 +4,6 @@
 * Bill of Materials
 * Fritzing wiring scheme
 * Sketchup file
-* MoreSTUFF
 
 Archive contains:
 
@@ -15,4 +14,3 @@ To do:
 
 * BioHack Board scheme
 * Conversion rpm to volume / min
-* Do more cool stuff
