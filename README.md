@@ -4,6 +4,7 @@
 * Bill of Materials
 * Fritzing wiring scheme
 * Sketchup file
+* MoreSTUFF
 
 Archive contains:
 
