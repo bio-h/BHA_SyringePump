@@ -181,8 +181,8 @@ void loop() {
   }
   
   mosfet_switch_timer+=dt;
-  if (mosfet_switch_timer > 1000) {
-    mosfet_switch_timer-=1000;
+  if (mosfet_switch_timer > 100) {
+    mosfet_switch_timer-=100;
     
     mosfet_index=1-mosfet_index;
     digitalWrite(PIN_MOSFET0, mosfet_index==0);
